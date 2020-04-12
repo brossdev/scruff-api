@@ -14,5 +14,8 @@
     "nohoist": [
       "**/sls-*/**"
     ]
+  },
+  "dependencies": {
+    "aws-sdk": "^2.656.0"
   }
 }
