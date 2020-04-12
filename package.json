@@ -1,0 +1,10 @@
+{
+  "name": "scruff-api",
+  "version": "0.0.1",
+  "description": "scruff and fluff api",
+  "main": "index.js",
+  "repository": "https://github.com/Brossco85/scruff-api",
+  "author": "bobby.dev@pm.me",
+  "license": "MIT",
+  "private": true
+}
