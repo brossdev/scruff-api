@@ -6,9 +6,34 @@ package:
   individually: true
 
 plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
+  - serverless-webpack
   - serverless-dotenv-plugin # Load .env as environment variables
+  - serverless-dynamodb-local
+  - serverless-offline
+
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - dynamodb:DescribeTable
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    Resource: "arn:aws:dynamodb:eu-west-1:*:*"
+
+custom:
+  tableName: customers
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    migration:
+      dir: mocks/migrations
 
 provider:
   name: aws
@@ -30,3 +55,17 @@ functions:
       - http:
           path: hello
           method: get
+resources:
+  Resources:
+    CustomersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        # Set the capacity to auto-scale
+        BillingMode: PAY_PER_REQUEST
