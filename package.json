@@ -21,6 +21,7 @@
   "devDependencies": {
     "@shelf/jest-dynamodb": "^1.7.0",
     "@types/node": "^13.11.1",
-    "jest": "^25.3.0"
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4"
   }
 }
